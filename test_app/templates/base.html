@@ -1,0 +1,29 @@
+{# Example base page template #}
+{%- extends "bootstrap/base.html" %}
+
+{% block title %}Sample App for __something__{% endblock %}
+
+{% import "bootstrap/fixes.html" as fixes %}
+{% import "bootstrap/utils.html" as util %}
+
+{% block head %}
+{{ super() }}
+{{ fixes.ie8() }}
+{%- endblock %}
+
+{% block styles -%}
+    {{super()}}
+    <link rel="stylesheet" href="{{ url_for('static', filename='table.css') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon-32x32.png') }}/">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicon-16x16.png') }}/">
+{% endblock %}
+
+{% block navbar %}
+{{ nav.frontend_top.render() }}
+{% endblock %}
+
+{% block content %}
+    {{ util.flashed_messages(dismissible=True) }}
+    {{ super() }}
+{% endblock %}

@@ -1,0 +1,29 @@
+{# Example page template #}
+{% extends "base.html" %}
+
+{% block content %}
+    {{ util.flashed_messages(dismissible=True) }}
+    <div class="container">
+      <div class="jumbotron">
+      {% if user %}
+        <h1>Hello, {{ user.username }}!</h1>
+          <div class="row">
+              <h5 class="col-4"><a href="{{ url_for('create') }}">Create</a></h5>
+          </div>
+          <ul>
+          {% for record in records %}
+          <li>{{ record.id }}: {{ record.short }}
+          {% if record.can_edit(user) %}
+              ;<a href="{{ url_for('edit', record_pk=record.id) }}">Edit</a>
+          {% endif %}
+          {% if record.can_delete(user) %}
+              ;<a href="{{ url_for('delete', record_pk=record.id) }}">Delete</a>
+          {% endif %}
+          </li>
+          {% endfor %}
+          </ul>
+      {% else %}
+        <h1>Hello, World!</h1>
+      {% endif %}
+      </div>
+{% endblock %}
